@@ -1,0 +1,46 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="generator" content="Astro v6.4.8"><title>博客上线：一条免服务器的发布管线 · rrCathy 的博客</title><meta name="description" content="没有服务器也能拥有自己的博客：源码仓库 + GitHub Actions 自动构建，发布到 Pages 子目录的全流程记录。"><meta property="og:type" content="website"><meta property="og:title" content="博客上线：一条免服务器的发布管线 · rrCathy 的博客"><meta property="og:description" content="没有服务器也能拥有自己的博客：源码仓库 + GitHub Actions 自动构建，发布到 Pages 子目录的全流程记录。"><meta property="og:url" content="https://rrcathy.github.io/blog/2026-09-09-pipeline/"><link rel="icon" type="image/svg+xml" href="/blog/favicon.svg"><link rel="alternate" type="application/rss+xml" title="rrCathy 的博客" href="/blog/rss.xml"><link rel="stylesheet" href="/blog/_astro/BaseLayout.6pX017pp.css"></head> <body> <header class="site-header"> <div class="site-header-inner"> <a class="brand" href="/blog/"> <b>rrCathy</b> · Blog
+</a> <nav class="site-nav"> <a href="/">项目</a> <a href="/blog/" aria-current="page">博客</a> <a href="https://github.com/rrCathy" target="_blank" rel="noopener">GitHub ↗</a> </nav> </div> </header> <main>  <article class="wrap article"> <header class="article-header"> <div class="post-meta"> <a href="/blog/">← 全部文章</a> <time datetime="2026-09-09T00:00:00.000Z"> 2026年9月9日 </time> <span class="tag">开发</span><span class="tag">基建</span> </div> <h1>博客上线：一条免服务器的发布管线</h1> </header> <div class="article-body"> <p>这是我博客的第一篇技术记录——写的就是<strong>这个博客自己</strong>怎么跑起来的。结论先行：整套东西不花一分钱服务器费用，写文章 = 改一个 Markdown 文件然后 push。</p>
+<h2 id="为什么不用服务器">为什么不用服务器</h2>
+<p>我的两个项目（GroupViz、grouplo）都已经是静态站点，托管在 GitHub Pages 上，由各自的源码仓库通过 Actions 自动构建、发布到 <code>rrcathy.github.io</code> 的子目录。博客天然也是静态内容 + 少量交互，完全可以复用这条管线，于是没有买服务器的必要。</p>
+<h2 id="站点架构">站点架构</h2>
+<p>博客是一个 <strong>Astro + React</strong> 工程，独立源码仓库，内容与部署分离：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="text"><code><span class="line"><span>rrCathy/blog (源码仓库，只管写文章)</span></span>
+<span class="line"><span> ├─ src/content/blog/   ← 文章：*.md（纯文本） / *.mdx（数学·交互）</span></span>
+<span class="line"><span> ├─ src/components/     ← React 交互组件</span></span>
+<span class="line"><span> └─ .github/workflows/  ← 构建 + 发布</span></span>
+<span class="line"><span>        │   build (astro build)</span></span>
+<span class="line"><span>        ▼</span></span>
+<span class="line"><span>rrcathy.github.io (Pages 仓库)</span></span>
+<span class="line"><span> └─ blog/               ← 构建产物，托管在 https://rrcathy.github.io/blog/</span></span></code></pre>
+<p>文章写成 Markdown/MDX 就够了。技术文用普通 <code>.md</code>，数学文用 <code>.mdx</code>——里面可以直接内嵌 <a href="https://github.com/rrCathy/GroupViz">@groupviz/react</a> 的交互组件，公式由 KaTeX 渲染。写作与发布分离：<strong>日常写 <code>.md</code>，需要活插图才写 <code>.mdx</code></strong>。</p>
+<h2 id="发布管线">发布管线</h2>
+<p>核心是一个 GitHub Actions 工作流，完全复刻 GroupViz 的做法：先 <code>astro build</code>，再把产物整体替换进 Pages 仓库的 <code>blog/</code> 目录并提交。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="yaml"><code><span class="line"><span style="color:#85E89D">name</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">Deploy blog</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#79B8FF">on</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#85E89D">  push</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#85E89D">    branches</span><span style="color:#E1E4E8">: [</span><span style="color:#9ECBFF">main</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#85E89D">jobs</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#85E89D">  deploy</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#85E89D">    runs-on</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">ubuntu-latest</span></span>
+<span class="line"><span style="color:#85E89D">    steps</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#E1E4E8">      - </span><span style="color:#85E89D">uses</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">actions/checkout@v4</span></span>
+<span class="line"><span style="color:#E1E4E8">      - </span><span style="color:#85E89D">uses</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">actions/setup-node@v4</span></span>
+<span class="line"><span style="color:#85E89D">        with</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#85E89D">          node-version</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">22</span></span>
+<span class="line"><span style="color:#85E89D">          cache</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">npm</span></span>
+<span class="line"><span style="color:#E1E4E8">      - </span><span style="color:#85E89D">run</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">npm ci</span></span>
+<span class="line"><span style="color:#E1E4E8">      - </span><span style="color:#85E89D">run</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">npm run build</span><span style="color:#6A737D">          # 产出 dist/</span></span>
+<span class="line"><span style="color:#6A737D">      # …… checkout rrcathy.github.io → 替换 blog/ → commit &#x26; push</span></span></code></pre>
+<p>关键点是 GitHub 没有买服务器也替我们免费跑构建；而 <code>rrcathy.github.io</code> 仓库只存放最终产物，所以站点响应就是纯静态文件，速度与稳定性都有保障。</p>
+<h2 id="给未来的自己">给未来的自己</h2>
+<p>维护时只需要记住三条：</p>
+<ol>
+<li>新文章 = 在 <code>src/content/blog/</code> 下新建 <code>.md</code> 或 <code>.mdx</code>，头部填 <code>title</code> / <code>pubDate</code> / <code>tags</code>；</li>
+<li>本地预览：<code>npm run dev</code>；发布前 <code>npm run build</code> 自查；</li>
+<li>写数学文章时，交互插图用 <code>&#x3C;GroupScene symbol="A4" view="cycle" /></code> 这种声明式组件，其余交给我。</li>
+</ol> </div> </article>  </main> <footer class="site-footer"> <div class="wrap site-footer-inner"> <span>© 2026 rrCathy</span> <span>
+由 <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> 构建 ·
+          交互插图由 <a href="https://github.com/rrCathy/GroupViz" target="_blank" rel="noopener">@groupviz/react</a> 驱动
+</span> </div> </footer> </body></html>

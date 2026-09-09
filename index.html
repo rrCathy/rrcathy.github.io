@@ -3,7 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cathy's Math Projects</title>
+    <title>rrCathy — 数学与代码</title>
+    <meta name="description" content="Cathy 的个人主页：群论可视化工具、数学游戏与博客。" />
     <style>
       * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -14,123 +15,164 @@
         --border: #30363d;
         --text: #c9d1d9;
         --text-muted: #8b949e;
+        --text-strong: #f0f6fc;
         --accent: #58a6ff;
         --accent-gold: #d2991d;
         --accent-green: #3fb950;
         --accent-purple: #a371f7;
+        --accent-teal: #4ecdc4;
       }
 
+      html { scroll-behavior: smooth; }
+
       body {
-        font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        font-family: 'Segoe UI', system-ui, -apple-system, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
         background: var(--bg);
         color: var(--text);
         min-height: 100vh;
         display: flex;
         flex-direction: column;
-        align-items: center;
       }
+
+      a { color: var(--accent); text-decoration: none; }
+      a:hover { text-decoration: underline; }
 
       .container {
-        max-width: 900px;
+        max-width: 920px;
         width: 100%;
-        padding: 60px 24px 48px;
+        margin: 0 auto;
+        padding: 0 24px;
+        flex: 1;
       }
 
-      /* Hero */
+      /* ---------- 顶栏导航 ---------- */
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        background: rgba(13, 17, 23, 0.88);
+        backdrop-filter: blur(8px);
+        border-bottom: 1px solid var(--border);
+      }
+      .topbar-inner {
+        max-width: 920px;
+        margin: 0 auto;
+        padding: 0 24px;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .brand {
+        font-size: 1.08rem;
+        font-weight: 800;
+        letter-spacing: 0.2px;
+        color: var(--text-strong);
+      }
+      .brand:hover { text-decoration: none; }
+      .brand .dot { color: var(--accent-teal); }
+      .nav { display: flex; gap: 22px; font-size: 0.95rem; }
+      .nav a { color: var(--text-muted); font-weight: 500; }
+      .nav a:hover { color: var(--text-strong); text-decoration: none; }
+      .nav a.current { color: var(--text-strong); }
+
+      /* ---------- Hero ---------- */
       .hero {
         text-align: center;
-        margin-bottom: 64px;
+        padding: 96px 0 56px;
       }
-
       .hero h1 {
-        font-size: 2.8rem;
+        font-size: 3rem;
         font-weight: 800;
-        background: linear-gradient(135deg, var(--accent-gold), var(--accent));
+        letter-spacing: -1px;
+        background: linear-gradient(120deg, #f0f6fc 20%, var(--accent-teal) 55%, var(--accent) 90%);
         -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
         background-clip: text;
-        margin-bottom: 12px;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 18px;
       }
-
-      .hero p {
+      .hero p.tagline {
         color: var(--text-muted);
-        font-size: 1.15rem;
-        max-width: 520px;
+        font-size: 1.18rem;
+        line-height: 1.8;
+        max-width: 620px;
         margin: 0 auto;
-        line-height: 1.7;
+      }
+      .hero .chips {
+        margin-top: 28px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: center;
+      }
+      .chip {
+        font-size: 0.85rem;
+        color: var(--text);
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        padding: 6px 16px;
+        background: var(--bg-card);
+      }
+      .chip b { color: var(--accent-teal); font-weight: 700; }
+
+      /* ---------- 区块标题 ---------- */
+      .section-title {
+        font-size: 1.15rem;
+        font-weight: 700;
+        color: var(--text-strong);
+        letter-spacing: 0.3px;
+        margin: 8px 0 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .section-title .bar {
+        width: 4px;
+        height: 18px;
+        border-radius: 2px;
+        background: var(--accent-teal);
+        display: inline-block;
       }
 
-      /* Projects grid */
+      /* ---------- 项目卡片 ---------- */
       .projects {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 24px;
+        gap: 20px;
+        padding-bottom: 72px;
       }
-
       .project-card {
         background: var(--bg-card);
         border: 1px solid var(--border);
         border-radius: 14px;
         overflow: hidden;
+        display: flex;
+        flex-direction: column;
         transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
         box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
-        display: flex;
-        flex-direction: column;
       }
-
       .project-card:hover {
-        border-color: var(--accent);
+        border-color: #4b5563;
         transform: translateY(-4px);
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+        box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45);
       }
-
-      .card-accent {
-        height: 4px;
-      }
-
+      .card-accent { height: 4px; }
       .card-accent-gold { background: var(--accent-gold); }
       .card-accent-green { background: var(--accent-green); }
-
-      .card-body {
-        padding: 28px 26px 20px;
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-      }
-
-      .card-icon {
-        font-size: 2.2rem;
-        margin-bottom: 12px;
-        line-height: 1;
-      }
-
-      .card-body h2 {
-        font-size: 1.4rem;
-        font-weight: 700;
-        margin-bottom: 4px;
-      }
-
-      .card-body .subtitle {
-        color: var(--text-muted);
-        font-size: 0.9rem;
-        margin-bottom: 16px;
-      }
-
+      .card-accent-teal { background: var(--accent-teal); }
+      .card-body { padding: 24px 24px 20px; display: flex; flex-direction: column; flex: 1; }
+      .card-head { display: flex; align-items: baseline; gap: 10px; margin-bottom: 6px; }
+      .card-icon { font-size: 1.5rem; }
+      .card-body h2 { font-size: 1.3rem; font-weight: 750; color: var(--text-strong); }
+      .card-body .subtitle { color: var(--text-muted); font-size: 0.88rem; }
       .card-body .desc {
         color: var(--text);
-        font-size: 0.93rem;
-        line-height: 1.65;
-        margin-bottom: 18px;
+        font-size: 0.92rem;
+        line-height: 1.7;
+        margin: 12px 0 16px;
         flex: 1;
       }
-
-      .card-tags {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 6px;
-        margin-bottom: 20px;
-      }
-
+      .card-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 18px; }
       .tag {
         font-size: 0.76rem;
         padding: 3px 10px;
@@ -138,147 +180,186 @@
         border-radius: 12px;
         color: var(--text-muted);
       }
-
-      .card-links {
-        display: flex;
-        gap: 10px;
-      }
-
+      .card-links { display: flex; gap: 10px; }
       .btn {
-        padding: 10px 22px;
+        padding: 9px 20px;
         border-radius: 8px;
-        font-size: 0.95rem;
+        font-size: 0.92rem;
         font-weight: 600;
         text-decoration: none;
         display: inline-flex;
         align-items: center;
         gap: 6px;
         transition: all 0.2s;
-        cursor: pointer;
-        border: none;
+        border: 1px solid transparent;
       }
-
-      .btn-primary {
-        background: var(--accent);
-        color: #fff;
-      }
-
-      .btn-primary:hover {
-        opacity: 0.85;
-      }
-
+      .btn-primary { background: var(--accent); color: #fff; }
+      .btn-primary:hover { opacity: 0.86; text-decoration: none; }
+      .btn-primary-teal { background: var(--accent-teal); color: #0f172a; }
+      .btn-primary-teal:hover { opacity: 0.88; text-decoration: none; }
       .btn-outline {
         background: transparent;
-        border: 1px solid var(--border);
+        border-color: var(--border);
         color: var(--text);
       }
+      .btn-outline:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
 
-      .btn-outline:hover {
-        border-color: var(--accent);
-        color: var(--accent);
-      }
-
-      /* Footer */
-      .footer {
-        text-align: center;
-        margin-top: 60px;
-        padding-top: 24px;
+      /* ---------- 关于 ---------- */
+      .about {
         border-top: 1px solid var(--border);
+        padding: 56px 0 72px;
+      }
+      .about-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 40px; }
+      .about p { color: var(--text); font-size: 0.98rem; line-height: 1.9; margin-bottom: 14px; }
+      .about p b { color: var(--text-strong); }
+      .about ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+      .about li {
+        font-size: 0.9rem;
+        color: var(--text-muted);
+        padding: 10px 14px;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        background: var(--bg-card);
+      }
+      .about li b { color: var(--text); font-weight: 650; }
+
+      /* ---------- 页脚 ---------- */
+      .footer {
+        border-top: 1px solid var(--border);
+        padding: 26px 0 34px;
+        text-align: center;
         color: var(--text-muted);
         font-size: 0.85rem;
       }
+      .footer a { color: var(--accent-teal); }
 
-      .footer a {
-        color: var(--accent);
-        text-decoration: none;
-      }
-
-      .footer a:hover {
-        text-decoration: underline;
-      }
-
-      /* Responsive */
-      @media (max-width: 640px) {
-        .projects {
-          grid-template-columns: 1fr;
-        }
-
-        .hero h1 {
-          font-size: 2rem;
-        }
-
-        .container {
-          padding: 40px 16px 36px;
-        }
+      /* ---------- 响应式 ---------- */
+      @media (max-width: 720px) {
+        .hero { padding: 64px 0 44px; }
+        .hero h1 { font-size: 2.2rem; }
+        .projects { grid-template-columns: 1fr; }
+        .about-grid { grid-template-columns: 1fr; }
+        .topbar-inner { padding: 0 16px; }
+        .container { padding: 0 16px; }
       }
     </style>
   </head>
   <body>
+    <header class="topbar">
+      <div class="topbar-inner">
+        <a class="brand" href="/">rrCathy<span class="dot">.</span></a>
+        <nav class="nav">
+          <a href="/" class="current">首页</a>
+          <a href="/blog/">博客</a>
+          <a href="#projects">项目</a>
+          <a href="#about">关于</a>
+        </nav>
+      </div>
+    </header>
+
     <div class="container">
-      <header class="hero">
-        <h1>Cathy's Math Projects</h1>
-        <p>交互式群论工具——从可视化探索到趣味挑战，用直观的方式理解抽象代数</p>
-      </header>
-
-      <section class="projects">
-        <!-- GroupViz -->
-        <article class="project-card">
-          <div class="card-accent card-accent-gold"></div>
-          <div class="card-body">
-            <div class="card-icon">&#x1F4CA;</div>
-            <h2>GroupViz</h2>
-            <p class="subtitle">群论可视化</p>
-            <p class="desc">
-              在网页中创建并交互式探索有限群。支持 Cayley 图、子群格、陪集条、同态动画、直积/半直积构造、对称群可视化和第一同构定理演示。
-            </p>
-            <div class="card-tags">
-              <span class="tag">React</span>
-              <span class="tag">TypeScript</span>
-              <span class="tag">Three.js</span>
-              <span class="tag">WebGL</span>
-            </div>
-            <div class="card-links">
-              <a class="btn btn-primary" href="GroupViz/">
-                进入应用 &#8594;
-              </a>
-              <a class="btn btn-outline" href="https://github.com/rrCathy/GroupViz" target="_blank" rel="noopener">
-                GitHub
-              </a>
-            </div>
-          </div>
-        </article>
-
-        <!-- Grouplo -->
-        <article class="project-card">
-          <div class="card-accent card-accent-green"></div>
-          <div class="card-body">
-            <div class="card-icon">&#x1F3AE;</div>
-            <h2>Grouplo</h2>
-            <p class="subtitle">群一把</p>
-            <p class="desc">
-              类似 Wordle 的群论猜谜游戏。根据群属性反馈（阶、交换性、幂零性、Sylow型等），在限时内猜出目标群。三种难度，覆盖上百个常见有限群。
-            </p>
-            <div class="card-tags">
-              <span class="tag">React</span>
-              <span class="tag">TypeScript</span>
-              <span class="tag">Vite</span>
-              <span class="tag">Wordle-like</span>
-            </div>
-            <div class="card-links">
-              <a class="btn btn-primary" href="grouplo/">
-                开始游戏 &#8594;
-              </a>
-              <a class="btn btn-outline" href="https://github.com/rrCathy/grouplo" target="_blank" rel="noopener">
-                GitHub
-              </a>
-            </div>
-          </div>
-        </article>
+      <!-- Hero -->
+      <section class="hero">
+        <h1>数学 · 代码 · 可视化</h1>
+        <p class="tagline">
+          我是 Cathy。我在做的是一件小事：把抽象的群论变得看得见、摸得着——
+          交互式可视化工具、数学游戏，以及写下来的一篇篇笔记。
+        </p>
+        <div class="chips">
+          <span class="chip">GroupViz 群论可视化</span>
+          <span class="chip">数学游戏 Grouplo</span>
+          <span class="chip">正在写 <b>博客</b></span>
+        </div>
       </section>
 
-      <footer class="footer">
-        &copy; 2025 <a href="https://github.com/rrCathy" target="_blank" rel="noopener">rrCathy</a>
-      </footer>
+      <!-- Projects -->
+      <section id="projects">
+        <div class="section-title"><span class="bar"></span>项目与 Live Demo</div>
+        <div class="projects">
+          <!-- 博客 -->
+          <article class="project-card">
+            <div class="card-accent card-accent-teal"></div>
+            <div class="card-body">
+              <div class="card-head"><span class="card-icon">&#x270D;&#xFE0F;</span><h2>博客</h2></div>
+              <p class="subtitle">数学笔记 · 技术记录</p>
+              <p class="desc">
+                群论学习笔记与 GroupViz 开发记录。文章里的插图不是截图，是可以悬停、拖拽、点击的活图。
+              </p>
+              <div class="card-tags">
+                <span class="tag">数学</span>
+                <span class="tag">开发日志</span>
+                <span class="tag">MDX</span>
+              </div>
+              <div class="card-links">
+                <a class="btn btn-primary-teal" href="/blog/">前往博客 &#8594;</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- GroupViz -->
+          <article class="project-card">
+            <div class="card-accent card-accent-gold"></div>
+            <div class="card-body">
+              <div class="card-head"><span class="card-icon">&#x1F4CA;</span><h2>GroupViz</h2></div>
+              <p class="subtitle">群论可视化</p>
+              <p class="desc">
+                在网页中创建并交互式探索有限群。支持 Cayley 图、子群格、陪集条、同态动画、直积/半直积构造、对称群可视化与第一同构定理演示。
+              </p>
+              <div class="card-tags">
+                <span class="tag">React</span>
+                <span class="tag">TypeScript</span>
+                <span class="tag">Three.js</span>
+                <span class="tag">WebGL</span>
+              </div>
+              <div class="card-links">
+                <a class="btn btn-primary" href="/GroupViz/">进入应用 &#8594;</a>
+                <a class="btn btn-outline" href="https://github.com/rrCathy/GroupViz" target="_blank" rel="noopener">GitHub</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Grouplo -->
+          <article class="project-card">
+            <div class="card-accent card-accent-green"></div>
+            <div class="card-body">
+              <div class="card-head"><span class="card-icon">&#x1F3AE;</span><h2>Grouplo</h2></div>
+              <p class="subtitle">群一把 · 猜群游戏</p>
+              <p class="desc">
+                类似 Wordle 的群论猜谜游戏。根据群属性反馈（阶、交换性、幂零性、Sylow 型等），在限时内猜出目标群。三种难度，覆盖上百个常见有限群。
+              </p>
+              <div class="card-tags">
+                <span class="tag">React</span>
+                <span class="tag">TypeScript</span>
+                <span class="tag">Wordle-like</span>
+              </div>
+              <div class="card-links">
+                <a class="btn btn-primary" href="/grouplo/">开始游戏 &#8594;</a>
+                <a class="btn btn-outline" href="https://github.com/rrCathy/grouplo" target="_blank" rel="noopener">GitHub</a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- About -->
+      <section class="about" id="about">
+        <div class="section-title"><span class="bar"></span>关于我</div>
+        <div class="about-grid">
+          <div>
+            <p><b>你好，我是 Cathy</b> —— 数学与编程的长期爱好者，目前专注于把抽象代数做成可交互的视觉体验。</p>
+            <p>我在维护 <b>GroupViz</b>（群论可视化工作台）与 <b>Grouplo</b>（群论猜谜游戏），并把过程中的数学思考与工程心得写进<a href="/blog/">博客</a>。全部项目开源在 GitHub。</p>
+          </div>
+          <ul>
+            <li><b>研究方向</b> 群论可视化 · 抽象代数教学</li>
+            <li><b>技术栈</b> React · TypeScript · Three.js</li>
+            <li><b>正在做</b> 自由群 · 3D Cayley 图 · 教学视图</li>
+          </ul>
+        </div>
+      </section>
     </div>
+
+    <footer class="footer">
+      © 2026 <a href="https://github.com/rrCathy" target="_blank" rel="noopener">rrCathy</a> · 由 GitHub Pages 免费托管
+    </footer>
   </body>
 </html>

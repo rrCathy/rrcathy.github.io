@@ -1,0 +1,32 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="generator" content="Astro v6.4.8"><title>凯莱图 · 系列 · rrCathy 的博客</title><meta name="description" content="《凯莱图》系列，共 2 篇，按发布顺序排列。"><meta property="og:type" content="website"><meta property="og:title" content="凯莱图 · 系列 · rrCathy 的博客"><meta property="og:description" content="《凯莱图》系列，共 2 篇，按发布顺序排列。"><meta property="og:url" content="https://rrcathy.github.io/blog/series/cayley/"><link rel="icon" type="image/svg+xml" href="/blog/favicon.svg"><link rel="alternate" type="application/rss+xml" title="rrCathy 的博客" href="/blog/rss.xml"><script>
+      // 主题初始化:localStorage 优先,否则跟随系统;写 <html data-theme>
+      // groupviz 视图与本站排版共用该属性切换浅/深。
+      ;(function () {
+        var KEY = 'blog-theme'
+        var theme = 'light'
+        try {
+          var saved = localStorage.getItem(KEY)
+          if (saved === 'dark' || saved === 'light') theme = saved
+          else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)
+            theme = 'dark'
+        } catch (e) {}
+        document.documentElement.dataset.theme = theme
+      })()
+    </script><link rel="stylesheet" href="/blog/_astro/tag-tone.DRvrJSZe.css"></head> <body> <header class="site-header"> <div class="site-header-inner"> <a class="brand" href="/blog/"> <b>rrCathy</b> · Blog
+</a> <nav class="site-nav"> <a href="/">项目</a> <a href="/blog/" aria-current="page">博客</a> <a href="https://github.com/rrCathy" target="_blank" rel="noopener">GitHub ↗</a> <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换浅色/深色主题" title="切换浅色/深色主题"> <svg class="icon-sun" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"> <circle cx="12" cy="12" r="4.1"></circle> <path d="M12 2.4v2.3M12 19.3v2.3M2.4 12h2.3M19.3 12h2.3M5.2 5.2l1.65 1.65M17.15 17.15l1.65 1.65M18.8 5.2l-1.65 1.65M6.85 17.15 5.2 18.8"></path> </svg> <svg class="icon-moon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M20.4 14.6A8.5 8.5 0 0 1 9.4 3.6a8.5 8.5 0 1 0 11 11Z"></path> </svg> </button> </nav> </div> </header> <main>  <div class="wrap"> <section class="blog-hero"> <p class="series-eyebrow">系列</p> <h1>凯莱图</h1> <p class="sub">共 2 篇 · 按发布顺序</p> </section> <ul class="post-list"> <li class="post-item" data-tags="群论,前端,架构"> <div class="post-item-body"> <div class="post-meta"> <span class="series-idx">第 1 篇</span> <time datetime="2026-09-10T00:00:00.000Z"> 2026年9月10日 </time> <span class="tag" data-tone="teal">群论</span><span class="tag" data-tone="blue">前端</span><span class="tag" data-tone="purple">架构</span> </div> <h2><a href="/blog/260910_cayley-graph/">凯莱图：从手绘到代码，再到引擎</a></h2> <p class="post-excerpt">凯莱图是群的乘法被摊平的样子。这篇从一支笔一张纸画到能跑的代码，再拆开一个真在用的可视化引擎，看它为什么不能只画一张图。</p> </div> <div class="post-cover"><img class="only-light" src="/blog/covers/260910-s3-light.png" alt="「凯莱图：从手绘到代码，再到引擎」封面图" loading="lazy" decoding="async"><img src="/blog/covers/260910-s3.png" alt="「凯莱图：从手绘到代码，再到引擎」封面图" loading="lazy" decoding="async" class="only-dark"></div> </li><li class="post-item" data-tags="群论,几何"> <div class="post-item-body"> <div class="post-meta"> <span class="series-idx">第 2 篇</span> <time datetime="2026-09-13T00:00:00.000Z"> 2026年9月13日 </time> <span class="tag" data-tone="teal">群论</span><span class="tag" data-tone="amber">几何</span> </div> <h2><a href="/blog/260913_cayley-shape-strategy/">凯莱图的形状选择策略</a></h2> <p class="post-excerpt">同一种群论结构，在平面和立体两个展厅里长成不同的样子。半直积的重布线、直积的格点与甜甜圈、循环群的螺旋、Q₈ 的勾股正方形、S₅ 的字长球，每件展品回答同一个问题：这个群为什么长这样。</p> </div> <div class="post-cover"><img class="only-light" src="/blog/covers/260913-q8-light.png" alt="「凯莱图的形状选择策略」封面图" loading="lazy" decoding="async"><img src="/blog/covers/260913-q8.png" alt="「凯莱图的形状选择策略」封面图" loading="lazy" decoding="async" class="only-dark"></div> </li> </ul> <p class="series-back"><a href="/blog/">← 全部文章</a></p> </div>  </main> <footer class="site-footer"> <div class="wrap site-footer-inner"> <span>© 2026 rrCathy</span> <span>
+由 <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> 构建 ·
+          交互插图由 <a href="https://github.com/rrCathy/GroupViz" target="_blank" rel="noopener">@groupviz/react</a> 驱动
+</span> </div> </footer> <script>
+      ;(function () {
+        var btn = document.getElementById('theme-toggle')
+        if (!btn) return
+        btn.addEventListener('click', function () {
+          var html = document.documentElement
+          var next = html.dataset.theme === 'dark' ? 'light' : 'dark'
+          html.dataset.theme = next
+          try {
+            localStorage.setItem('blog-theme', next)
+          } catch (e) {}
+        })
+      })()
+    </script> </body> </html>
